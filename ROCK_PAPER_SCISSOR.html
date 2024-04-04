@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+
+           background-color: black; 
+            background-image: radial-gradient(circle, rgb(113, 54, 105) 10%, rgba(187, 91, 190, 0.51) 15%, rgba(14, 12, 14, 0.838) 60%);
+            color: white;
+            
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        h1 {
+            background-color: black;
+            color: white;
+            text-align: center;
+            height: 3.5rem;
+            font-size: 3rem;
+
+        }
+
+        .choice {
+            height: 150px;
+            width: 150px;
+            cursor: pointer;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .choice:hover {
+            opacity: 0.8;
+        }
+
+        img {
+            height: 150px;
+            width: 150px;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+
+        .choices {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            margin-top: 4rem;
+            align-items: center;
+        }
+
+        .score-board {
+            justify-content: center;
+            display: flex;
+            align-items: center;
+            gap: 5rem;
+            font-size: 2rem;
+            margin: top 3rem;
+        }
+
+        .msg-container {
+            justify-content: center;
+            display: flex;
+            align-items: center;
+
+
+        }
+
+        .msg {
+            display: inline;
+            gap: 3rem;
+            font-size: 1.5rem;
+            margin-top: 5rem;
+            background-color: black;
+            padding: 1rem;
+            border-radius: 1rem;
+            color: aliceblue;
+        }
+
+        #user-score,
+        #computer-score {
+            font-size: 4rem;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Rock Paper Scissors</h1>
+    <div class="choices">
+        <div class="choice" id="rock">
+            <img src="rock2.jpg" alt="">
+        </div>
+        <div class="choice" id="paper">
+            <img src="paper.webp" alt="">
+        </div>
+        <div class="choice" id="scissors">
+            <img src="scissors.jpg" alt="">
+        </div>
+    </div>
+
+    <div class="score-board">
+        <div class="score">
+            <p id="user-score"> 0</p>
+            <p>you</p>
+        </div>
+        <div class="score">
+            <p id="computer-score"> 0</p>
+            <p>comp</p>
+        </div>
+
+    </div>
+    <div class="msg-container">
+        <div class="msg">play your move</div>
+
+    </div>
+
+
+    <script>
+        let userscore = 0
+        let compscore = 0
+        let choices = document.querySelectorAll(".choice")
+        const msg = document.querySelector(".msg")
+        const userscorepera = document.querySelector("#user-score");
+        const compscorepera = document.querySelector("#computer-score");
+
+        const gencompchoice = () => {
+            const option = ["rock", "paper", "scissors"]
+            const randomidx = Math.floor(Math.random() * 3);
+            return option[randomidx]
+        }
+        const drawgame = () => {
+            console.log("game was over");
+            msg.innerText = "game was draw"
+            msg.style.backgroundColor = "black"
+        }
+        const showwinner = (userwin, userchoice, compchoice) => {
+            if (userwin) {
+                console.log("you win");
+                msg.innerText = `you win ! your ${userchoice} beats ${compchoice}`;
+                msg.style.backgroundColor = "green"
+                userscore++;
+                userscorepera.innerText = userscore;
+
+            }
+            else {
+                console.log("you lose")
+                msg.innerText = `you lose  ${compchoice} beats your ${userchoice}`
+                msg.style.backgroundColor = "red"
+                compscore++;
+                compscorepera.innerText = compscore
+            }
+
+        }
+
+        const playgame = (userchoice) => {
+            console.log("choice was clicked :", userchoice);
+            const compchoice = gencompchoice();
+            console.log("computer choice  :", compchoice);
+
+            if (userchoice == compchoice) {
+                drawgame();
+            }
+            else {
+                let userwin = true;
+                if (userchoice === "rock") {
+                    usetwin = compchoice === "paper" ? false : true;
+                }
+                else if (userchoice === "paper") {
+                    userwin = compchoice === "scissors" ? false : true;
+                }
+                else {
+                    userwin = compchoice === "rock" ? false : true;
+                }
+                showwinner(userwin, userchoice, compchoice);
+            }
+
+
+        }
+
+        choices.forEach((choice) => {
+            choice.addEventListener("click", () => {
+                const userchoice = choice.getAttribute("id")
+
+                playgame(userchoice);
+
+            });
+        });
+
+    </script>
+</body>
+
+</html>
